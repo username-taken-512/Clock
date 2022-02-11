@@ -1,0 +1,8 @@
+
+### Clock 0.1  2022-02-11
+- All timezone data from timezonedb in Json
+- Unsplash API to get images
+- Search function in timezones page
+- Analog clock
+- Router for navigation
+- Responsive base layout
