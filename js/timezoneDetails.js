@@ -9,9 +9,10 @@ function drawDetails(params) {
     offsetHours = '+' + offsetHours;
   }
 
-  document.querySelector('h1').innerHTML = params.get('country');
-  document.querySelector('h2').innerHTML = city + ' (GMT ' + offsetHours + ')';
+  document.querySelector('h2').innerHTML = params.get('country');
+  document.querySelector('h1').innerHTML = city + ' (GMT ' + offsetHours + ')';
+  let clock = document.querySelector('.clock');
 
   displayImages(city);        // unsplash.js
-  startClock(offsetSeconds);  // clock.js
+  startClock(clock, offsetSeconds);  // clock.js
 }

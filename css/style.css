@@ -48,28 +48,42 @@ main img {
 
 header {
   background-color: rgb(245, 65, 65);
-  padding: 20px;
   margin-bottom: 20px;
-  border-bottom: 2px solid white;
   font-family: 'Righteous', cursive;
   font-size: 24px;
 }
 
-nav a {
+.header-title {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 40px;
   color: white;
-  padding: 0 10px;
+  text-align: center;
+  letter-spacing: 4px
+}
+
+.topnav {
+  border-top: 2px solid rgba(255, 255, 255, .5);
+  border-bottom: 2px solid rgba(255, 255, 255, .5);
+  text-align: center;
+
+}
+
+.topnav a {
+  display: inline-block;
+  color: white;
+  padding: 10px 20px;
   text-decoration: none;
 }
 
-nav .active {
+.topnav .active {
   color:#cfd8dc;
   font-weight: bold;
 }
 
-nav a:hover {
+.topnav a:hover {
   background-color: #ddd;
   color: black;
-  border:rgb(255, 240, 240) solid 2px;
+  /* border:rgb(255, 240, 240) solid 2px; */
 }
 
 
@@ -91,12 +105,18 @@ h1 {
   font-size: 40px;  
 }
 
+.city {
+  display: inline;
+}
+
 img {
   width: 100%;
 }
 
 img.halfSize {
   width: 50%;
+  opacity: 1;
+  display: inline;
 }
 
 article {
@@ -117,6 +137,27 @@ article {
 
 .timezones article:hover {
   background-color: #ddd;
+}
+
+.fav {
+  position: relative;
+  display: block;
+  overflow: auto; 
+  border: 2px solid black;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: -4px 4px #888888;
+}
+
+.favClock {
+  display: inline-block;
+  overflow: auto; 
+  position: relative;
+}
+
+.favInfo {
+  background: aqua;
+  font-size: 40px;
 }
 
 /* ### Search bar ### */
@@ -169,4 +210,61 @@ svg {
 ::placeholder {
   color: black;
   opacity: 0.7; 
+}
+
+/* ### Buttons ### */
+/* https://getcssscan.com/css-buttons-examples */
+.button-fav {
+  float: inline-end;
+  align-items: center;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.button-remove {
+  position: absolute;
+  bottom: 10px;
+  right: 10px
+}
+
+
+.button-fav:hover,
+.button-fav:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.button-fav:hover {
+  transform: translateY(-1px);
+}
+
+.button-fav:active {
+  background-color: #F0F0F1;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: rgba(0, 0, 0, 0.65);
+  transform: translateY(0);
 }

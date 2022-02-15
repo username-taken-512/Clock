@@ -1,25 +1,28 @@
-let secondHand;
-let minsHand;
-let hourHand;
-let offsetMillis;
+let currentClocks = []; // Stores interval id for running clocks
 
-function startClock(offsetSeconds) {
-  secondHand = document.querySelector('.second-hand');
-  minsHand = document.querySelector('.min-hand');
-  hourHand = document.querySelector('.hour-hand');
+// Starts clock. Receives div with clock and timezone offset
+function startClock(clockElement, offsetSeconds) {
 
   console.log('startclock offset: ' + offsetSeconds);
-  offsetMillis = offsetSeconds * 1000;
-  let intervalId = setInterval(setDate, 1000);
-  setDate();
+  let offsetMillis = offsetSeconds * 1000;
+  let intervalId = setInterval(function () {
+    setDate(clockElement, offsetMillis);
+  }, 1000);
+  currentClocks.push(intervalId);
 
+  // TEST to remove clock
   window.onbeforeunload = function (event) {
     console.log('startclock onBeforeunload');
     clearInterval(intervalId);
   };
 }
 
-function setDate() {
+// Updates clock
+function setDate(clockElement, offsetMillis) {
+  let secondHand = clockElement.querySelector('.second-hand');
+  let minsHand = clockElement.querySelector('.min-hand');
+  let hourHand = clockElement.querySelector('.hour-hand');
+
   console.log('setDate');
   const currentTimeGMT = new Date();
   const currentTime = new Date(currentTimeGMT.getTime() + offsetMillis);
@@ -35,5 +38,15 @@ function setDate() {
   const hour = currentTime.getHours();
   const hourDegrees = ((hour / 12) * 360) + ((mins / 60) * 30) + 90;
   hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+}
+
+// Stops all clock intervals
+function stopClocks() {
+  if (currentClocks.length > 0) {
+    currentClocks.forEach(element => {
+      console.log('- stop clock: ' + element);
+      clearInterval(element);
+    });
+  }
 }
 

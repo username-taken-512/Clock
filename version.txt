@@ -1,4 +1,12 @@
 
+### Clock 0.2
+- Added Favourite button to timezonedetails
+- Local storage save/restore of favourites
+- Clearing running clocks on navigation
+- Favourites page with favourite "cards"
+- Multiple clocks running on favourite page
+- Changed header layout
+
 ### Clock 0.1  2022-02-11
 - All timezone data from timezonedb in Json
 - Unsplash API to get images

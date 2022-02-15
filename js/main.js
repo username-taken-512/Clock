@@ -13,34 +13,13 @@ document.querySelector('body')
     // Check if external link & open in new window
     let href = aTag.getAttribute('href');
 
-    /*
-    // Get Params
-    if (href.includes('?')) {
-      let paramsString = href.substring(href.indexOf('?') + 1);
-      let searchParams = new URLSearchParams(paramsString);
-      console.log('href: ' + href);
-      console.log(searchParams.get('city'));
-
-      //Iterate the search parameters.
-      for (let p of searchParams) {
-        console.log(p);
-      }
-    }
-    */
-
-
-    /*
-    let city = aTag.getAttribute('data-city');
-
-    console.log('href: ' + href);
-    console.log('city: ' + city);
-    */
-
-
     if (href.indexOf('http') === 0) {
       aTag.setAttribute('target', '_blank');
       return;
     }
+
+    // If running clocks, stop ticking intervals 
+    stopClocks();
 
     //If internal link, prevent default browser behavior (reload)
     event.preventDefault();
@@ -52,6 +31,16 @@ document.querySelector('body')
     router();
   });
 
+// Returns params from address bar
+function getURLparams() {
+  let url = document.URL;
+  if (url.includes('?')) {
+    let paramsString = url.substring(url.indexOf('?') + 1);
+    return new URLSearchParams(paramsString);
+  } else {
+    return null;
+  }
+}
 // Run router on back/forward
 window.addEventListener('popstate', router);
 
@@ -78,7 +67,6 @@ async function router() {
     }
   }
 
-
   makeNavActive(route); // Show Navigation active
 
   // Transform route to a partial
@@ -102,6 +90,8 @@ async function router() {
     //loadJsonDisplayTimezones();
   } else if (route === '/partials/timezonedetails.html') {
     drawDetails(searchParams);
+  } else if (route === '/partials/favourites.html') {
+    loadFavs();
   }
   // route === '/partials/timezones.html' && loadJsonDisplayProducts();
 }
