@@ -1,11 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Righteous&family=Source+Sans+Pro:wght@700&display=swap');
 @import url('/css/clock.css');
+@import url('/css/toast.css');
 
 /* Google fonts:
 font-family: 'Lora', serif;
 font-family: 'Righteous', cursive;
 font-family: 'Source Sans Pro', sans-serif;
 */
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   background-color: rgb(255, 240, 240);
@@ -54,7 +59,7 @@ header {
 }
 
 .header-title {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 40px;
   color: white;
   text-align: center;
@@ -106,7 +111,7 @@ h1 {
 }
 
 .city {
-  display: inline;
+  display: inline-block;
 }
 
 img {
@@ -119,8 +124,88 @@ img.halfSize {
   display: inline;
 }
 
+.fav-card {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-evenly; 
+  align-items: stretch;      
+  flex-wrap: wrap;
+
+  border: 2px solid black;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: -4px 4px #888888;
+}
+
+.fav-info-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.flexbox-item1 {
+
+  border: 2px solid purple;
+}
+
+.fav-clock-item {
+  padding: 0 10px;
+}
+
+.fav-info-item {
+  align-self: stretch;
+  flex-grow: 1;
+}
+
+.fav-button-item {
+  flex-grow: 1;
+  align-self: flex-end;
+}
+
+.fav-dig-clock-item {
+  flex-shrink: 1;
+  align-self: flex-start;
+}
+
+.bold {
+  font-weight: bold;
+}
+
 article {
   padding: 20px;
+}
+
+.timezonedetails-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.timezone-details-top-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.timezonedetails-middle-container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.timezonedetails-middle-item {
+  flex-grow: 1;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timezonedetails-image {
+  max-width: 320px;
+
 }
 
 .timezones article {
@@ -128,36 +213,22 @@ article {
   padding: 10px 20px;
 }
 
+/*
 .timezonedetails article {
   border-bottom: 1px solid black;
   padding: 10px 20px;
   position: absolute;
   width: 80vh;
 }
+*/
 
 .timezones article:hover {
   background-color: #ddd;
 }
 
-.fav {
-  position: relative;
-  display: block;
-  overflow: auto; 
-  border: 2px solid black;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  box-shadow: -4px 4px #888888;
-}
-
-.favClock {
-  display: inline-block;
-  overflow: auto; 
-  position: relative;
-}
-
 .favInfo {
   background: aqua;
-  font-size: 40px;
+  font-size: 30px;
 }
 
 /* ### Search bar ### */
@@ -215,7 +286,6 @@ svg {
 /* ### Buttons ### */
 /* https://getcssscan.com/css-buttons-examples */
 .button-fav {
-  float: inline-end;
   align-items: center;
   background-color: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -243,10 +313,13 @@ svg {
   width: auto;
 }
 
+.button-addfav {
+  float: inline-end;
+}
+
 .button-remove {
-  position: absolute;
-  bottom: 10px;
-  right: 10px
+  align-self:flex-end;
+  justify-self: end;
 }
 
 
@@ -267,4 +340,13 @@ svg {
   box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
   color: rgba(0, 0, 0, 0.65);
   transform: translateY(0);
+}
+
+@media screen and (max-width: 600px) {
+  h1 { 
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 18px;
+  }
 }
