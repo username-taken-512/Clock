@@ -16,18 +16,16 @@ function setupTimezonePage() {
 
 // Search timezone list on timezones.html and filter what to show
 function search(searchString) {
-  console.log('SEARCH');
+  console.log('Search: ' + searchString);
   let timezoneSection = document.getElementById('timezones');
   const timezoneSectionChildren = timezoneSection.children;
   const childrenArray = Array.from(timezoneSectionChildren);
   childrenArray.forEach(element => {
-    console.log('SEARCH ELEMENT: ' + element);
-    console.log(element);
     let city = element.querySelector('.city').innerText;
     let country = element.querySelector('.country').innerText;
-    if (city.toLowerCase().startsWith(searchString)) {
+    if (city.toLowerCase().includes(searchString.trim())) {
       element.style.display = 'block';
-    } else if (country.toLowerCase().startsWith(searchString)) {
+    } else if (country.toLowerCase().includes(searchString.trim())) {
       element.style.display = 'block';
     } else {
       element.style.display = 'none';
@@ -64,11 +62,11 @@ async function loadJsonDisplayTimezones() {
           <article class="timezone">
             <h3 class="country">
               <a href="/timezonedetails?country=${timezone.countryName}&city=${city}&offset=${timezone.gmtOffset}" 
-                data-city="${city}" data-country="${timezone.countryName}" data-offset="${timezone.gmtOffset / 60 / 60}">${timezone.countryName}
+                data-city="${city}" data-country="${timezone.countryName}" data-offset="${timezone.gmtOffset / 60 / 60}"> 🌍 ${timezone.countryName}
               </a>
             </h3>
-            <p class="city">${city}</p>
-            <p class="offset">Offset: GMT ${offsetHours}</p>
+            <p class="city"> 🏙 ${city}</p>
+            <p class="offset">🕒 Offset: GMT ${offsetHours}</p>
           </article>
         `;
   }

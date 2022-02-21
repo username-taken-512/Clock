@@ -1,10 +1,7 @@
 // Manage favourites
 
-function saveFav() {
-  let favs = getFavouritesFromStorage();
-  console.log('- saveFav');
-
-  // Get params, store in object
+// Creates Fav object from timezonedetails page
+function createFav() {
   let searchParams = getURLparams();
   let fav = {
     city: searchParams.get('city'),
@@ -12,17 +9,33 @@ function saveFav() {
     offset: searchParams.get('offset')
   };
 
-  console.log(fav.city);
-  console.log(fav.country);
-  console.log(fav.offset);
+  saveFav(fav)
+}
+
+// Stores fav to local storage
+function saveFav(fav) {
+  let favs = getFavouritesFromStorage();
+  console.log('- saveFav');
+
+  // Check if already stored as favourite
+  for (f of favs) {
+    if (f.city === fav.city) {
+      drawToast('⭐ Already A Favourite!');
+      return false;
+    }
+  }
 
   favs.push(fav);
   saveFavouritesToStorage(favs);
+  drawToast('⭐ Favourite Added!');
+  return true;
 }
 
 // Draw favourites on favourites.html
 function loadFavs() {
   let favs = getFavouritesFromStorage();
+
+  // Clock HTML
   const clockDiv = `  
   <div class="clock fav-clock">
     <div class="outer-clock-face">
@@ -40,17 +53,32 @@ function loadFavs() {
 
   // Draw html
   let favSection = document.querySelector('.favourites');
+  if (favs === undefined || favs.length == 0) {
+    favSection.innerHTML = 'You have no favourites added 😔';
+    return;
+  }
   let content = '';
 
   favs.forEach(element => {
+    let offsetHours = element.offset / 60 / 60;
+
+    // Timezone GMT +/- to display
+    if (offsetHours >= 0) {
+      offsetHours = '+' + offsetHours;
+    }
+
     content += `
-      <article class="fav" data-offset="${element.offset}">
-        <div class="favClock">${clockDiv}</div>
-        <span class="favInfo">
-          <h3>${element.city}<h3>
-          <h4>${element.country}<h4>
+      <article class="fav-card" data-offset="${element.offset}">
+        <span class="fav-clock-item flexbox-item">${clockDiv}</span>
+        <span class="fav-info-container flexbox-item">
+          <div class="fav-dig-clock-item dig-clock flexbox-item">00:00:00</div>
+          <div class="fav-info-item flexbox-item">
+              <strong class="bold">City: </strong>${element.city} - (GMT ${offsetHours})</br>
+              <strong class="bold">Country: </strong>${element.country} 
+          </div>
+          <div class="flexbox-item fav-button-item"><button class="button-fav" data-city="${element.city}" role="button" onclick="removeFav('${element.city}')">❌ Remove Favourite</button></div>
         </span>
-        <button class="button-fav button-remove" data-city="${element.city}" role="button" onclick="removeFav('${element.city}')">❌ Remove Favourite</button>
+
       </article>
     `;
   });
@@ -58,11 +86,12 @@ function loadFavs() {
 
   // Setup clocks
   console.log('setup clocks');
-  let loadedFavs = document.querySelectorAll('.fav');
+  let loadedFavs = document.querySelectorAll('.fav-card');
   loadedFavs.forEach(element => {
     element.getAttribute('data-offset');
     let clockDiv = element.querySelector('.clock');
-    startClock(clockDiv, element.getAttribute('data-offset'));
+    let digClockDiv = element.querySelector('.dig-clock');
+    startClock(clockDiv, digClockDiv, element.getAttribute('data-offset'));
   });
 }
 
@@ -83,6 +112,7 @@ function removeFav(city) {
   // Save changes and reload favourites
   saveFavouritesToStorage(favs);
   loadFavs();
+  drawToast('⭐ Favourite Removed!');
 }
 
 function saveFavouritesToStorage(favourites) {
@@ -91,4 +121,64 @@ function saveFavouritesToStorage(favourites) {
 
 function getFavouritesFromStorage() {
   return JSON.parse(localStorage.getItem('clockFavourites') || '[]');
+}
+
+// Draws a toast at the bottom of the window
+function drawToast(text) {
+  let toast = document.querySelector('.toast');
+
+  // Add text and show div
+  toast.classList.add('show');
+  toast.innerHTML = text;
+
+  // After 3 seconds, hide div again
+  setTimeout(function () { toast.classList.remove('show'); }, 3000);
+}
+
+// Show/hide dialog to add custom timezone
+function showAddCustomTimezone() {
+  document.querySelector('.form-popup-bgoverlay').style.visibility = 'visible';
+}
+
+function hideAddCustomTimezone() {
+  document.querySelector('.form-popup-bgoverlay').style.visibility = 'hidden';
+  document.querySelectorAll('.addcustom-error-message',).forEach(element => {
+    element.style.visibility = 'hidden';
+  });
+}
+
+// Add a custom timezone with FAB on Favourite page
+function addCustomTimezone() {
+  let city = document.getElementById('custom-city');
+  let country = document.getElementById('custom-city');
+  let offset = document.getElementById('custom-offset');
+
+  // Input validation
+  let inputError = false;
+  document.querySelectorAll('.addcustom').forEach(element => {
+    document.getElementById('error-' + element.id).style.visibility = 'hidden'; // Reset every attempt
+    if (!element.checkValidity()) {
+      document.getElementById('error-' + element.id).style.visibility = 'visible';  // Show error 
+      inputError = true;
+    }
+  });
+  if (inputError) {
+    return;
+  }
+
+  let fav = {
+    city: city.value.trim(),
+    country: country.value.trim(),
+    offset: offset.value * 60 * 60
+  };
+
+  // Save favourite and refresh list of favourites
+  if (saveFav(fav)) {
+    document.querySelectorAll('.addcustom').forEach(element => {
+      element.value = '';
+    });
+
+    document.querySelector('.form-popup-bgoverlay').style.visibility = 'hidden';
+    loadFavs();
+  }
 }

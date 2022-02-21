@@ -1,24 +1,32 @@
-<article>
-  <h1 class="city"></h1><button class="button-fav" role="button" onclick="saveFav()">⭐ Add Favourite</button>
-  <h2 class="country"></h2>
-
-
-  <img src="/images/coke.jpg" class="halfSize" alt="coke bottle" title="A coke bottle" id="mainpic">
-
-  <div class="clock">
-    <div class="outer-clock-face">
-      <div class="marking marking-one"></div>
-      <div class="marking marking-two"></div>
-      <div class="marking marking-three"></div>
-      <div class="marking marking-four"></div>
-      <div class="inner-clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
-      </div>
-    </div>
+<article class="timezonedetails-container">
+  <div class="timezone-details-top-container">
+    <h1 class="city"></h1>
+    <button class="button-fav button-addfav" role="button" onclick="createFav()">⭐ Add
+      Favourite</button>
   </div>
+  <h2 class="country"></h2>
+  <div class="timezonedetails-middle-container">
+    <span class="timezonedetails-middle-item"><img src="/images/coke.jpg" class="timezonedetails-image"
+        alt="coke bottle" title="A coke bottle" id="mainpic"></span>
 
-
+    <span class="timezonedetails-middle-item">
+      <div class="clock">
+        <div class="outer-clock-face">
+          <div class="marking marking-one"></div>
+          <div class="marking marking-two"></div>
+          <div class="marking marking-three"></div>
+          <div class="marking marking-four"></div>
+          <div class="inner-clock-face">
+            <div class="hand hour-hand"></div>
+            <div class="hand min-hand"></div>
+            <div class="hand second-hand"></div>
+          </div>
+        </div>
+      </div>
+      <div class="dig-clock">00:00:00</div>
+    </span>
+  </div>
+  <div class="timezonedetails-bottom-container"></div>
 
 </article>
+<div class="toast"></div>

@@ -4,3 +4,30 @@
   <section class="favourites"></section>
 
 </article>
+<div class="toast"></div>
+
+<button class="fab" onclick="showAddCustomTimezone()"> + </button>
+
+<div class="form-popup-bgoverlay">
+  <div class="form-popup" id="myForm">
+    <form class="form-container">
+      <h1>Add Custom Timezone</h1>
+
+      <label for="city"><b>City</b></label>
+      <input class="addcustom" type="text" placeholder="City" name="city" id="custom-city" required>
+      <div class="addcustom-error-message" id="error-custom-city">City cannot be empty</div>
+
+      <label for="country"><b>Country</b></label>
+      <input class="addcustom" type="text" placeholder="Country" name="city" id="custom-country" required>
+      <div class="addcustom-error-message" id="error-custom-country">Country cannot be empty</div>
+
+      <label for="offset"><b>Offset (+/- h)</b></label>
+      <input class="addcustom" type="number" step="0.25" max="13" min="-13" placeholder="+/- in hours" name="offset"
+        id="custom-offset" required>
+      <div class="addcustom-error-message" id="error-custom-offset">Offset is required</div>
+
+      <button type="button" class="button-fav" onclick="addCustomTimezone()">✔️ Save</button>
+      <button type="button" class="button-fav button-custom-cancel" onclick="hideAddCustomTimezone()">❌ Close</button>
+    </form>
+  </div>
+</div>

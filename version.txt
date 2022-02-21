@@ -1,5 +1,19 @@
 
-### Clock 0.2
+### Clock 0.4  2022-02-21
+- Topnav responsive use with flexbox
+- Wikipedia article fetched for timezonedetails
+- Padded digital clock mins/secs with 0
+- Search form layout changed
+- FAB in favourites opens form to add custom timezone
+
+### Clock 0.3  2022-02-17
+- Added digital clock timezonedetails and favourites
+- Favourite page cards built with flexbox
+- Timezonedetails page built with flexbox
+- Added Toast to Favourite add/remove
+- Favourites can now only be added once
+
+### Clock 0.2  2022-02-15
 - Added Favourite button to timezonedetails
 - Local storage save/restore of favourites
 - Clearing running clocks on navigation
