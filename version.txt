@@ -1,4 +1,9 @@
 
+### Clock 0.5  
+- Now using zoneName instead of offset to accomodate daylight saving time
+- Unsplash image additional search terms used if first is not found
+- Added 'loading' image 
+
 ### Clock 0.4  2022-02-21
 - Topnav responsive use with flexbox
 - Wikipedia article fetched for timezonedetails

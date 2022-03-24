@@ -6,7 +6,7 @@ function createFav() {
   let fav = {
     city: searchParams.get('city'),
     country: searchParams.get('country'),
-    offset: searchParams.get('offset')
+    zoneName: searchParams.get('zonename')
   };
 
   saveFav(fav)
@@ -60,21 +60,16 @@ function loadFavs() {
   let content = '';
 
   favs.forEach(element => {
-    let offsetHours = element.offset / 60 / 60;
-
-    // Timezone GMT +/- to display
-    if (offsetHours >= 0) {
-      offsetHours = '+' + offsetHours;
-    }
 
     content += `
-      <article class="fav-card" data-offset="${element.offset}">
+      <article class="fav-card" data-zonename=${element.zoneName}>
         <span class="fav-clock-item flexbox-item">${clockDiv}</span>
         <span class="fav-info-container flexbox-item">
           <div class="fav-dig-clock-item dig-clock flexbox-item">00:00:00</div>
           <div class="fav-info-item flexbox-item">
-              <strong class="bold">City: </strong>${element.city} - (GMT ${offsetHours})</br>
-              <strong class="bold">Country: </strong>${element.country} 
+              <strong class="bold">City: </strong>${element.city}</br>
+              <strong class="bold">Country: </strong>${element.country}</br>
+              <strong class="bold">Timezone: </strong>${element.zoneName} 
           </div>
           <div class="flexbox-item fav-button-item"><button class="button-fav" data-city="${element.city}" role="button" onclick="removeFav('${element.city}')">❌ Remove Favourite</button></div>
         </span>
@@ -88,10 +83,9 @@ function loadFavs() {
   console.log('setup clocks');
   let loadedFavs = document.querySelectorAll('.fav-card');
   loadedFavs.forEach(element => {
-    element.getAttribute('data-offset');
     let clockDiv = element.querySelector('.clock');
     let digClockDiv = element.querySelector('.dig-clock');
-    startClock(clockDiv, digClockDiv, element.getAttribute('data-offset'));
+    startClock(clockDiv, digClockDiv, element.getAttribute('data-zonename'));
   });
 }
 
@@ -136,8 +130,25 @@ function drawToast(text) {
 }
 
 // Show/hide dialog to add custom timezone
-function showAddCustomTimezone() {
+async function showAddCustomTimezone() {
   document.querySelector('.form-popup-bgoverlay').style.visibility = 'visible';
+  let selectTimezone = document.getElementById('custom-timezone');
+
+  let rawData = await fetch('/data/list-time-zone.json');
+  let jsonData = await rawData.json();
+  let timezoneList = await jsonData.zones;
+
+  for (let timezone of timezoneList) {
+    console.log('---');
+    console.log(timezone);
+    let offsetHours = timezone.gmtOffset / 60 / 60;
+
+    // Timezone GMT +/- to display
+    if (offsetHours >= 0) {
+      offsetHours = '+' + offsetHours;
+    }
+    selectTimezone.innerHTML += `<option value="${timezone.zoneName}">${timezone.zoneName} (GMT ${offsetHours})</option>`;
+  }
 }
 
 function hideAddCustomTimezone() {
@@ -151,7 +162,7 @@ function hideAddCustomTimezone() {
 function addCustomTimezone() {
   let city = document.getElementById('custom-city');
   let country = document.getElementById('custom-city');
-  let offset = document.getElementById('custom-offset');
+  let timezone = document.getElementById('custom-timezone');
 
   // Input validation
   let inputError = false;
@@ -169,7 +180,7 @@ function addCustomTimezone() {
   let fav = {
     city: city.value.trim(),
     country: country.value.trim(),
-    offset: offset.value * 60 * 60
+    zoneName: timezone.value
   };
 
   // Save favourite and refresh list of favourites

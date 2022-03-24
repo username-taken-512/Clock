@@ -1,33 +1,33 @@
 let currentClocks = []; // Stores interval id for running clocks
-const weekdays = ['sun', 'mon', 'tue', 'wen', 'thu', 'fri', 'sat'];
+const weekdays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
 // Starts clock. Receives div with clock and timezone offset
-function startClock(clockElement, digClockElement, offsetSeconds) {
+function startClock(clockElement, digClockElement, zoneName) {
 
-  console.log('startclock offset: ' + offsetSeconds);
-  let offsetMillis = offsetSeconds * 1000;
   let intervalId = setInterval(function () {
-    setDate(clockElement, digClockElement, offsetMillis);
+    setDate(clockElement, digClockElement, zoneName);
   }, 1000);
   currentClocks.push(intervalId);
 
   // TEST to remove clock
   window.onbeforeunload = function (event) {
-    console.log('startclock onBeforeunload');
     clearInterval(intervalId);
   };
 }
 
 // Updates clock
-function setDate(clockElement, digClockElement, offsetMillis) {
+function setDate(clockElement, digClockElement, zoneName) {
   let secondHand = clockElement.querySelector('.second-hand');
   let minsHand = clockElement.querySelector('.min-hand');
   let hourHand = clockElement.querySelector('.hour-hand');
 
-  console.log('setDate');
   // Update analog clock
-  const currentTimeGMT = new Date();
-  const currentTime = new Date(currentTimeGMT.getTime() + offsetMillis);
+  let d = new Date().toLocaleString("sv-SE", { timeZone: zoneName });
+
+  let currentTime = new Date(  //new Date(year, monthIndex, day, hours, minutes, seconds)
+    d.substring(0, 4), d.substring(5, 7) - 1, d.substring(8, 10),
+    d.substring(11, 13), d.substring(14, 16), d.substring(17, 19)
+  );
 
   const seconds = currentTime.getSeconds();
   const secondsDegrees = ((seconds / 60) * 360) + 90;
@@ -43,14 +43,12 @@ function setDate(clockElement, digClockElement, offsetMillis) {
 
   // Update digital clock
   digClockElement.innerHTML = `${hour}:${mins > 9 ? mins : '0' + mins}:${seconds > 9 ? seconds : '0' + seconds} ${weekdays[currentTime.getDay()]}`
-  console.log('-clock ' + currentTime.getDay());
 }
 
 // Stops all clock intervals
 function stopClocks() {
   if (currentClocks.length > 0) {
     currentClocks.forEach(element => {
-      console.log('- stop clock: ' + element);
       clearInterval(element);
     });
   }

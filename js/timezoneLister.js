@@ -47,6 +47,7 @@ async function loadJsonDisplayTimezones() {
     let cityNameSplit = timezone.zoneName.split('/');
     let city = cityNameSplit[cityNameSplit.length - 1].replaceAll('_', ' ');
     let offsetHours = timezone.gmtOffset / 60 / 60;
+    let zoneName = timezone.zoneName;
 
     // Timezone GMT +/- to display
     if (offsetHours >= 0) {
@@ -61,7 +62,7 @@ async function loadJsonDisplayTimezones() {
     html += `
           <article class="timezone">
             <h3 class="country">
-              <a href="/timezonedetails?country=${timezone.countryName}&city=${city}&offset=${timezone.gmtOffset}" 
+              <a href="/timezonedetails?country=${timezone.countryName}&city=${city}&offset=${timezone.gmtOffset}&zonename=${zoneName}" 
                 data-city="${city}" data-country="${timezone.countryName}" data-offset="${timezone.gmtOffset / 60 / 60}"> 🌍 ${timezone.countryName}
               </a>
             </h3>

@@ -22,9 +22,10 @@
       <div class="addcustom-error-message" id="error-custom-country">Country cannot be empty</div>
 
       <label for="offset"><b>Offset (+/- h)</b></label>
-      <input class="addcustom" type="number" step="0.25" max="13" min="-13" placeholder="+/- in hours" name="offset"
-        id="custom-offset" required>
-      <div class="addcustom-error-message" id="error-custom-offset">Offset is required</div>
+      <select class="addcustom" id="custom-timezone" name="custom-timezone"></select>
+      <!-- <input class="addcustom" type="number" step="0.25" max="13" min="-13" placeholder="+/- in hours" name="offset"
+        id="custom-offset" required> -->
+      <div class="addcustom-error-message" id="error-custom-timezone">Select a timezone</div>
 
       <button type="button" class="button-fav" onclick="addCustomTimezone()">✔️ Save</button>
       <button type="button" class="button-fav button-custom-cancel" onclick="hideAddCustomTimezone()">❌ Close</button>

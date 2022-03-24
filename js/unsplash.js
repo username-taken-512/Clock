@@ -4,12 +4,21 @@ const searchURL = 'https://api.unsplash.com/search/photos/?client_id=' + API_KEY
 
 
 // Displays loaded images on page
-async function displayImages(city) {
-  let imageElement = document.getElementById('mainpic');
-  let images = await getImages(city);
+async function displayImages(imageElement, ...searchTerms) {
 
-  console.log('display Image: ' + images);
-  imageElement.src = images[0].urls.regular;
+  // Looking for image (1 second between unsplash API calls)
+  for (searchTerm of searchTerms) {
+    let images = await getImages(searchTerm);
+    if (images.length > 0) {
+      console.log(images);
+      imageElement.src = images[0].urls.regular;
+      imageElement.title = images[0].description || searchTerm;
+      return;
+    } else {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+  }
+  imageElement.src = './images/no-image-found.jpg';
 }
 
 // Returns a list of image URL's on search term
@@ -18,8 +27,6 @@ async function getImages(searchTerm) {
     .then((response) => response.json())
     .then((data) => {
       let allImages = data.results;
-      console.log(allImages[0]);
-      console.log(allImages[0].urls.regular);
       return allImages;
     });
 }

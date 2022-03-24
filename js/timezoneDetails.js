@@ -1,22 +1,26 @@
 // Draws information on timezonedetails page
 async function drawDetails(params) {
   let city = params.get('city');
+  let country = params.get('country');
   let offsetSeconds = params.get('offset');
   let offsetHours = offsetSeconds / 60 / 60;
+  let zoneName = params.get('zonename');
 
   // Timezone GMT +/- to display
   if (offsetHours >= 0) {
     offsetHours = '+' + offsetHours;
   }
 
-  document.querySelector('.country').innerHTML = params.get('country');
+  document.querySelector('.country').innerHTML = country;
   document.querySelector('.city').innerHTML = city + ' (GMT ' + offsetHours + ')';
   let clock = document.querySelector('.clock');
   let digClock = document.querySelector('.dig-clock');
   let bottomInfo = document.querySelector('.timezonedetails-bottom-container');
 
-  displayImages(city);        // unsplash.js
-  startClock(clock, digClock, offsetSeconds);  // clock.js
+  let imageElement = document.querySelector('.timezonedetails-image');
+
+  displayImages(imageElement, city, country);        // unsplash.js
+  startClock(clock, digClock, zoneName);  // clock.js
   bottomInfo.innerHTML = await getWikiInfo(city); // Gets wiki info
 }
 
