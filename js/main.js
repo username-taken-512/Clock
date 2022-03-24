@@ -1,6 +1,10 @@
-// Delegated event handling
-// - Listen to clicks on the body
-// - Only react if you clicked an a tag
+/*
+Clock!
+By: 
+Jonatan Engerdahl
+HKR
+DA377C VT22 - Software Development for the Web
+*/
 
 document.querySelector('body')
   .addEventListener('click', function (event) {

@@ -1,8 +1,14 @@
 
-### Clock 0.5  
+
+### Clock 0.6  2022-03-24 - All Grade 3-4-5 req fulfilled
+- Added the initial Figma mockup
+- Some slight modifications
+
+### Clock 0.5  2022-03-24 
 - Now using zoneName instead of offset to accomodate daylight saving time
 - Unsplash image additional search terms used if first is not found
 - Added 'loading' image 
+
 
 ### Clock 0.4  2022-02-21
 - Topnav responsive use with flexbox

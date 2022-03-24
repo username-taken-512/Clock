@@ -110,6 +110,21 @@ h1 {
   font-size: 40px;  
 }
 
+article.timezone > p, article.timezone > h3 {
+  margin: 0 0;
+}
+
+h3.city > a {
+  color: black;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+h3.city > a:hover {
+  color: black;
+  text-decoration: underline;
+}
+
 .city {
   display: inline-block;
 }

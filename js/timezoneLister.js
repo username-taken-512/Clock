@@ -61,12 +61,12 @@ async function loadJsonDisplayTimezones() {
 
     html += `
           <article class="timezone">
-            <h3 class="country">
+            <h3 class="city">
               <a href="/timezonedetails?country=${timezone.countryName}&city=${city}&offset=${timezone.gmtOffset}&zonename=${zoneName}" 
-                data-city="${city}" data-country="${timezone.countryName}" data-offset="${timezone.gmtOffset / 60 / 60}"> 🌍 ${timezone.countryName}
+                data-city="${city}" data-country="${timezone.countryName}" data-offset="${timezone.gmtOffset / 60 / 60}"> 🏙 ${city}
               </a>
             </h3>
-            <p class="city"> 🏙 ${city}</p>
+            <p class="country"> 🌍 ${timezone.countryName}</p>
             <p class="offset">🕒 Offset: GMT ${offsetHours}</p>
           </article>
         `;
